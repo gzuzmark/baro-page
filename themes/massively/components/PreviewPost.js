@@ -13,7 +13,7 @@ export default class PreviewPost extends React.Component {
         <header>
           <span className="date">{this.props.post.frontmatter.date}</span>
           <h2>
-            <Link to={this.props.post.frontmatter.path}>
+            <Link to={this.props.post.frontmatter.slug}>
               {this.props.post.frontmatter.title}
             </Link>
           </h2>

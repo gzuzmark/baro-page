@@ -14,12 +14,12 @@ export default function PostTemplate(props) {
 }
 
 export const pageQuery = graphql`
-  query MassivelyBlogPostByPath($path: String!) {
-    markdownRemark(frontmatter: { path: { eq: $path } }) {
-      html
+  query MassivelyBlogPostByPath($slug: String!) {
+    contentfulBlog(frontmatter: { slug: { eq: $slug } }) {
+      content
       frontmatter {
         date(formatString: "MMMM DD, YYYY")
-        path
+        slug
         title
       }
     }

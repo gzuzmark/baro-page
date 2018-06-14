@@ -17,7 +17,7 @@ export default function Tags({ pathContext }) {
               return (
                 <li key={id}>
                   <h1>
-                    <Link to={frontmatter.path} className="button special">
+                    <Link to={frontmatter.slug} className="button special">
                       {frontmatter.title}
                     </Link>
                   </h1>

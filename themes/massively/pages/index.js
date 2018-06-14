@@ -28,15 +28,15 @@ export default function Index(props) {
 
 export const pageQuery = graphql`
   query MassivelyIndexQuery {
-    allMarkdownRemark(sort: { order: DESC, fields: [frontmatter___date] }) {
+    allContentfulBlog(sort: { order: DESC, fields: [frontmatter___date] }) {
       edges {
         node {
-          excerpt(pruneLength: 250)
+          content(pruneLength: 250)
           id
           frontmatter {
             title
             date(formatString: "MMMM DD, YYYY")
-            path
+            slug
           }
         }
       }

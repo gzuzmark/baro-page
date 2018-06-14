@@ -18,16 +18,16 @@ export default class Post extends React.Component {
           </header>
           <p
             className="blog-post-content"
-            dangerouslySetInnerHTML={{ __html: this.props.post.html }}
+            dangerouslySetInnerHTML={{ __html: this.props.post.content }}
           />
           <Tags list={this.props.post.frontmatter.tags || []} />
           <div className="pagination">
             {this.props.prev &&
-              <Link className="previous" to={this.props.prev.frontmatter.path}>
+              <Link className="previous" to={this.props.prev.frontmatter.slug}>
                 {this.props.prev.frontmatter.title}
               </Link>}
             {this.props.next &&
-              <Link className="next" to={this.props.next.frontmatter.path}>
+              <Link className="next" to={this.props.next.frontmatter.slug}>
                 {this.props.next.frontmatter.title}
               </Link>}
           </div>
