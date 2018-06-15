@@ -5,7 +5,7 @@ import PreviewPost from '../components/PreviewPost';
 import Template from '../layouts/index';
 
 export default function Index(props) {
-  const { edges: posts } = props.data.allMarkdownRemark;
+  const { edges: posts } = props.data.allContentfulBlogPost;
 
   return (
     <Template {...props}>
@@ -13,7 +13,7 @@ export default function Index(props) {
         <div id="main">
         <section className="posts">
           {posts
-            .filter(post => post.node.frontmatter.title.length > 0)
+            .filter(post => post.node.title.length > 0)
             .map(({ node: post }) => {
               return (
                 <PreviewPost key={post.id} post={post} />
@@ -26,20 +26,27 @@ export default function Index(props) {
   );
 }
 
-export const pageQuery = graphql`
-  query MassivelyIndexQuery {
-    allContentfulBlog(sort: { order: DESC, fields: [frontmatter___date] }) {
-      edges {
-        node {
-          content(pruneLength: 250)
-          id
-          frontmatter {
-            title
-            date(formatString: "MMMM DD, YYYY")
-            slug
+export const pageQuery = graphql`  
+query HomeQuery {
+  allContentfulBlogPost(sort: { fields: [publishDate], order: DESC }) {
+    edges {
+      node {
+        title
+        slug
+        publishDate(formatString: "MMMM Do, YYYY")
+        tags
+        heroImage {
+          file {
+            url
+          }
+        }
+        description {
+          childMarkdownRemark {
+            html
           }
         }
       }
     }
   }
+}
 `;

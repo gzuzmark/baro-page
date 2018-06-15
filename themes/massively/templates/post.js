@@ -4,7 +4,9 @@ import Post from '../components/Post';
 import Template from '../layouts/index';
 
 export default function PostTemplate(props) {
-  const { markdownRemark: post } = props.data;
+  console.log('LOOGGGGG POSTTT')
+  console.log(props.data)
+  const { contentfulBlogPost: post } = props.data;
   const { next, prev } = props.pathContext;
   return (
     <Template {...props}>
@@ -14,14 +16,22 @@ export default function PostTemplate(props) {
 }
 
 export const pageQuery = graphql`
-  query MassivelyBlogPostByPath($slug: String!) {
-    contentfulBlog(frontmatter: { slug: { eq: $slug } }) {
-      content
-      frontmatter {
-        date(formatString: "MMMM DD, YYYY")
-        slug
-        title
+
+query BlogPostBySlug($slug: String!) {
+  contentfulBlogPost(slug: { eq: $slug }) {
+    title
+    publishDate(formatString: "MMMM Do, YYYY")
+    heroImage {
+      file {
+        url
       }
     }
+    body {
+      childMarkdownRemark {
+        html
+      }
+    }
+    tags
   }
+}
 `;

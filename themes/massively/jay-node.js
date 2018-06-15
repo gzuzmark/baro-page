@@ -29,19 +29,11 @@ exports.createPages = ({ boundActionCreators, graphql }) => {
 
   const blogPostTemplate = path.resolve(`${__dirname}/templates/post.js`);
   return graphql(`{
-    allContentfulBlog(
-      sort: { order: DESC, fields: [frontmatter___date] }
-      limit: 1000
-    ) {
+    allContentfulBlogPost {
       edges {
         node {
-          content
-          id
-          frontmatter {
-            date
-            slug
-            title
-          }
+          title
+          slug
         }
       }
     }
@@ -51,13 +43,16 @@ exports.createPages = ({ boundActionCreators, graphql }) => {
       return Promise.reject(result.errors)
     }
 
-    const posts = result.data.allContentfulBlog.edges;
+    const posts = result.data.allContentfulBlogPost.edges;
 
     // Create pages for each markdown file.
     posts.forEach(({ node }, index) => {
       createPage({
-        path: node.frontmatter.path,
+        path: node.slug,
         component: blogPostTemplate,
+        context: {
+          slug: node.slug
+        },
       });
     });
 
